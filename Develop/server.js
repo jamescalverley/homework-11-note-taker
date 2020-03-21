@@ -34,10 +34,7 @@ app.post('/api/notes', function( req, res ){
 
 app.delete('/api/notes/:id', function( req, res){
     let noteDeleteID = req.params.id;
-    console.log("[DELETE noteID >>> ]", noteDeleteID);
     const notesObj = JSON.parse(fs.readFileSync('./db/db.json','utf8'));
-    console.log("[before deletion]", notesObj);
-    //* rewriting the forEach function
     notesObj.forEach(( note ) => {
         if( noteDeleteID == note.id){
             console.log(`delete ID:${noteDeleteID} --- notesList ID: ${note.id}`);
@@ -45,9 +42,6 @@ app.delete('/api/notes/:id', function( req, res){
             notesObj.splice(note, 1);
         }
     });
-    console.log("[after deletion]", notesObj);
-
-
     fs.writeFileSync('./db/db.json', JSON.stringify(notesObj));
     res.send({ message: "ready to delete"});
 });
