@@ -23,31 +23,32 @@ app.get('/api/notes', function( req, res){
 app.post('/api/notes', function( req, res ){
     const notesObj = JSON.parse(fs.readFileSync('./db/db.json','utf8'));
     console.log("[newNote]", req.body);
-    req.body.id = notesObj.length + 1;
+    req.body.id = Math.floor(Math.random() * 100000);
     console.log("[newNote ID]", req.body.id);
     notesObj.push(req.body);
     fs.writeFileSync('./db/db.json', JSON.stringify(notesObj));
+    console.log("[note list Length]", notesObj.length )
+    console.log("[ALL NOTES]", notesObj )
     res.send({ message: "Your note was saved." })
 });
 
 app.delete('/api/notes/:id', function( req, res){
-
-    console.log(`[DELETE ready] ${req.params.id}`);
-
+    let noteDeleteID = req.params.id;
+    console.log("[DELETE noteID >>> ]", noteDeleteID);
     const notesObj = JSON.parse(fs.readFileSync('./db/db.json','utf8'));
     console.log("[before deletion]", notesObj);
-    notesObj.forEach(( note )=> {
-        if( note.id == req.body.id ){
-            console.log("need to delete note:", note);
-            console.log("note in array:", notesObj[req.body.id])
-
-            notesObj.splice(req.params.id - 1, 1 );
-            console.log("[after deletion]", notesObj);
+    //* rewriting the forEach function
+    notesObj.forEach(( note ) => {
+        if( noteDeleteID == note.id){
+            console.log(`delete ID:${noteDeleteID} --- notesList ID: ${note.id}`);
+            console.log("this note >>>", note);
+            notesObj.splice(note, 1);
         }
     });
-    console.log("[--Writing to json--]");
+    console.log("[after deletion]", notesObj);
+
+
     fs.writeFileSync('./db/db.json', JSON.stringify(notesObj));
-    console.log("[--Finished writing to json--]");
     res.send({ message: "ready to delete"});
 });
 
@@ -56,3 +57,4 @@ app.delete('/api/notes/:id', function( req, res){
 app.listen( PORT, function(){
     console.log(`[server] running on http://localhost:${PORT}`)
 });
+

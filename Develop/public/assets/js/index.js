@@ -49,7 +49,7 @@ var renderActiveNote = function() {
     $noteText.attr("readonly", false);
     $noteTitle.val("");
     $noteText.val("");
-    console.log("no id!!!")
+   
     }
 };
 
