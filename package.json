@@ -16,8 +16,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jamescalverley/homework-11-note-taker"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.2"
   }
+
 }
