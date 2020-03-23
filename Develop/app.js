@@ -1,3 +1,6 @@
+//! is this needed???
+// require('dotenv').config(); // --> process.env
+
 const express = require('express');
 const fs = require('fs');
 
