@@ -1,6 +1,3 @@
-//! is this needed???
-// require('dotenv').config(); // --> process.env
-
 const express = require('express');
 const fs = require('fs');
 
@@ -10,6 +7,10 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.static('public'));
 app.use( express.urlencoded({ extended: true }) );
+
+app.get('/', function(req,res){
+    res.sendFile('./public/index.html')
+});
 
 app.get('/notes', function( req, res ){
     let notesHTML = fs.readFileSync('./public/notes.html');
